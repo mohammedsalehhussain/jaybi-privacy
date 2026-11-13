@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دليل جيبي – JAYBI</title>
+<meta name="description" content="دليل مصوّر خطوة بخطوة لاستخدام تطبيق جيبي – JAYBI لإدارة المصروفات والديون.">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+/* التخطيط: شريط علوي كحلي بلون التطبيق، ثم فصول؛ كل خطوة نص بجانب لقطة الجوال (تتراص على الجوال) */
+:root {
+  --bg: #f3f6f8;
+  --surface: #ffffff;
+  --ink: #18212f;
+  --muted: #5a6577;
+  --line: #dce3ea;
+  --navy: #142a4c;
+  --on-navy: #f3f6fb;
+  --emerald: #138a68;
+  --emerald-soft: #e3f4ee;
+  --expense: #c53b3b;
+  --tip-bg: #fff6e3;
+  --tip-line: #e8c46a;
+  --font: "Tajawal", "Segoe UI", "Noto Sans Arabic", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1524; --surface: #152039; --ink: #e8edf4; --muted: #9ba7b9; --line: #26344f;
+    --navy: #0a1322; --on-navy: #eef2f8; --emerald: #36c497; --emerald-soft: #12352d;
+    --expense: #ef7a7a; --tip-bg: #2b2414; --tip-line: #8a6d24; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1524; --surface: #152039; --ink: #e8edf4; --muted: #9ba7b9; --line: #26344f;
+  --navy: #0a1322; --on-navy: #eef2f8; --emerald: #36c497; --emerald-soft: #12352d;
+  --expense: #ef7a7a; --tip-bg: #2b2414; --tip-line: #8a6d24; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font);
+  font-size: 17px; line-height: 1.8; direction: rtl;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--navy); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.hero { background: var(--navy); color: var(--on-navy); }
+header.hero .wrap { padding-block: 40px 28px; display: grid; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .02em; }
+.mark { width: 40px; height: 40px; border-radius: 12px; background: var(--emerald); display: grid; place-items: center; }
+.mark svg { width: 22px; height: 22px; }
+h1 { font-size: clamp(30px, 6vw, 46px); line-height: 1.25; margin: 0; font-weight: 800; text-wrap: balance; }
+.lead { margin: 0; max-width: 62ch; opacity: .9; font-size: 18px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.facts li { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 2px 12px; font-size: 14px; }
+
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+nav.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; scrollbar-width: thin; }
+nav.toc a {
+  flex: none; color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 500;
+  padding: 4px 12px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line);
+}
+nav.toc a:hover, nav.toc a:focus-visible { border-color: var(--emerald); color: var(--emerald); outline: none; }
+
+main .wrap { padding-block: 24px 64px; display: grid; gap: 56px; }
+section.ch { display: grid; gap: 22px; scroll-margin-top: 70px; }
+.ch-head { display: grid; gap: 4px; border-bottom: 2px solid var(--line); padding-bottom: 12px; }
+.ch-num { color: var(--emerald); font-weight: 800; font-size: 14px; letter-spacing: .06em; }
+h2 { margin: 0; font-size: clamp(24px, 4vw, 32px); line-height: 1.35; text-wrap: balance; }
+.ch-head p { margin: 0; color: var(--muted); max-width: 65ch; }
+
+.step { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 28px; align-items: start; }
+.step.noimg { grid-template-columns: minmax(0, 1fr); }
+.step .txt { min-width: 0; display: grid; gap: 10px; max-width: 62ch; }
+h3 { margin: 0; font-size: 21px; line-height: 1.4; }
+.step p { margin: 0; }
+ol.do { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 8px; }
+ol.do li { counter-increment: s; position: relative; padding-inline-start: 40px; min-height: 30px; }
+ol.do li::before {
+  content: counter(s, arabic-indic); position: absolute; inset-inline-start: 0; top: 2px;
+  width: 28px; height: 28px; border-radius: 50%; line-height: 28px; text-align: center;
+  background: var(--emerald-soft); color: var(--emerald); font-weight: 800; font-size: 15px;
+}
+ul.dl { margin: 0; padding-inline-start: 1.1em; display: grid; gap: 4px; }
+b.ui { font-weight: 700; color: var(--emerald); }
+.tip { background: var(--tip-bg); border: 1px solid var(--tip-line); border-radius: 12px; padding: 10px 14px; font-size: 16px; }
+.tip strong { font-weight: 800; }
+.note { color: var(--muted); font-size: 15px; }
+
+figure.phone { margin: 0; justify-self: center; width: 100%; max-width: 280px; }
+figure.phone button { all: unset; cursor: zoom-in; display: block; border-radius: 26px; }
+figure.phone button:focus-visible { outline: 3px solid var(--emerald); outline-offset: 3px; }
+figure.phone img {
+  display: block; width: 100%; height: auto; aspect-ratio: 9 / 20; border-radius: 26px;
+  border: 6px solid var(--navy); background: var(--surface); box-shadow: 0 10px 28px rgba(20, 42, 76, .16);
+}
+figure.phone figcaption { text-align: center; font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+.faq { display: grid; gap: 10px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; }
+.faq summary { cursor: pointer; font-weight: 700; }
+.faq details p { margin: 8px 0 0; color: var(--ink); }
+
+footer .wrap { padding-block: 24px 40px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+dialog.zoom { border: none; padding: 0; background: transparent; max-width: min(92vw, 460px); }
+dialog.zoom::backdrop { background: rgba(5, 10, 20, .78); }
+dialog.zoom img { width: 100%; height: auto; max-height: 88vh; object-fit: contain; border-radius: 22px; display: block; }
+dialog.zoom form { text-align: center; margin-top: 10px; }
+dialog.zoom button { font: inherit; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 4px 18px; cursor: pointer; }
+
+@media (max-width: 760px) {
+  .step { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  figure.phone { max-width: 240px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14v9a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V7z" fill="#fff"/><circle cx="12" cy="5" r="2.2" stroke="#fff" stroke-width="1.6"/></svg></span>
+      جيبي – JAYBI
+    </div>
+    <h1>دليل جيبي للمبتدئين</h1>
+    <p class="lead">خطوة بخطوة مع صورة لكل شاشة: كيف تسجّل مصروفك ودخلك، وتتابع حساباتك، وتدير الديون التي لك وعليك، وتقرأ تقاريرك، وتحفظ نسخة من بياناتك.</p>
+    <ul class="facts">
+      <li>بلا حساب ولا إنترنت</li>
+      <li>بياناتك على جهازك فقط</li>
+      <li>الإصدار 1.0.8</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="toc" aria-label="فهرس الدليل">
+  <div class="wrap">
+    <a href="#start">أول تشغيل</a>
+    <a href="#home">الرئيسية</a>
+    <a href="#add">مصروف ودخل</a>
+    <a href="#accounts">الحسابات</a>
+    <a href="#debts">الديون</a>
+    <a href="#payments">الدفعات والسندات</a>
+    <a href="#ops">العمليات</a>
+    <a href="#reports">التقارير</a>
+    <a href="#budget">الميزانية والتقويم</a>
+    <a href="#settings">الإعدادات</a>
+    <a href="#backup">النسخ الاحتياطي</a>
+    <a href="#faq">أسئلة شائعة</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <section class="ch" id="start">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ١</span>
+        <h2>أول تشغيل</h2>
+        <p>جيبي لا يطلب منك إنشاء حساب ولا بريداً إلكترونياً. كل ما تسجّله يبقى على جوالك.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>شاشات الترحيب</h3>
+          <ol class="do">
+            <li>عند فتح التطبيق أول مرة تظهر شاشات تعريفية قصيرة. الخطوط في أعلى الشاشة تبيّن موقعك منها.</li>
+            <li>إن أردت الواجهة بالإنجليزية اضغط <b class="ui">English</b> في الأعلى.</li>
+            <li>اضغط <b class="ui">لنبدأ</b> للدخول إلى التطبيق.</li>
+          </ol>
+          <p class="tip"><strong>نصيحة:</strong> ابدأ بإضافة حساباتك الحقيقية (المحفظة النقدية، حسابك البنكي…) برصيدها الحالي، حتى تكون الأرصدة في التطبيق مطابقة للواقع من اليوم الأول. الطريقة في <a href="#accounts">فصل الحسابات</a>.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/welcome.webp" alt="شاشة الترحيب في جيبي مع زر لنبدأ" width="540" height="1200" loading="lazy"></button><figcaption>شاشة الترحيب</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="home">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٢</span>
+        <h2>الشاشة الرئيسية</h2>
+        <p>ملخص وضعك المالي في مكان واحد، ومنها تصل إلى كل شيء.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>ماذا تعرض الرئيسية؟</h3>
+          <ul class="dl">
+            <li><b class="ui">إجمالي الرصيد المتاح</b>: مجموع أرصدة كل حساباتك، وتحته دخل الشهر ومصروفاته وصافي التدفق.</li>
+            <li>أيقونة العين 👁 تخفي الأرقام وتظهرها، مفيدة إن كان أحد بجانبك.</li>
+            <li><b class="ui">لي عند الآخرين</b> و<b class="ui">للآخرين عندي</b>: ما لك من ديون وما عليك.</li>
+            <li><b class="ui">صافي ما تملك</b>: رصيد حساباتك + ما لك عند الآخرين − ما عليك لهم.</li>
+            <li>أزرار سريعة: مصروف، دخل، أعطيتُ مبلغاً، أخذتُ مبلغاً، دفعة دين، تحويل بين الحسابات.</li>
+            <li><b class="ui">ميزانية الشهر</b>: كم صرفت من الحد الذي وضعته.</li>
+          </ul>
+          <p>في الأسفل شريط التبويبات: <b class="ui">الرئيسية</b>، <b class="ui">الديون</b>، زر <b class="ui">+</b>، <b class="ui">العمليات</b>، <b class="ui">التقارير</b>. وزر القائمة ☰ في الأعلى يفتح <b class="ui">المزيد</b>.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/home.webp" alt="الشاشة الرئيسية وفيها إجمالي الرصيد والديون والأزرار السريعة" width="540" height="1200" loading="lazy"></button><figcaption>الشاشة الرئيسية</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>زر الإضافة السريعة (+)</h3>
+          <p>الزر الأخضر في منتصف الشريط السفلي موجود في كل التبويبات. اضغطه تظهر قائمة بما يمكنك تسجيله:</p>
+          <ul class="dl">
+            <li><b class="ui">مصروف</b> و<b class="ui">دخل</b>: مال خرج أو دخل.</li>
+            <li><b class="ui">أعطيتُ مبلغاً</b>: أقرضت شخصاً (دين لك عنده).</li>
+            <li><b class="ui">أخذتُ مبلغاً</b>: اقترضت من شخص (دين عليك له).</li>
+            <li><b class="ui">دفعة دين</b>: سداد أو تحصيل جزء من دين قائم.</li>
+            <li><b class="ui">تحويل بين الحسابات</b>: نقل مالك من حساب لآخر.</li>
+          </ul>
+          <p class="note">اضغط ✕ لإغلاق القائمة.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/quick-add.webp" alt="قائمة الإضافة السريعة مفتوحة فوق الشاشة الرئيسية" width="540" height="1200" loading="lazy"></button><figcaption>قائمة الإضافة السريعة</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="add">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٣</span>
+        <h2>تسجيل مصروف أو دخل أو تحويل</h2>
+        <p>أكثر ما ستفعله يومياً. يكفي المبلغ والحساب، والباقي اختياري.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تسجيل مصروف</h3>
+          <ol class="do">
+            <li>اضغط <b class="ui">+</b> ثم <b class="ui">مصروف</b>.</li>
+            <li>اكتب <b class="ui">المبلغ</b>.</li>
+            <li>اختر <b class="ui">التصنيف</b> (الطعام والمشروبات، المواصلات…)، فتعرف لاحقاً أين يذهب مالك.</li>
+            <li>اختر <b class="ui">الحساب المدفوع منه</b>، ويظهر بجانبه رصيده الحالي.</li>
+            <li>اختر <b class="ui">طريقة الدفع</b> واكتب <b class="ui">وصفاً</b> قصيراً إن أردت.</li>
+            <li>التاريخ والوقت يُملآن تلقائياً بالآن، وتستطيع تغييرهما لعملية سابقة.</li>
+            <li>اضغط <b class="ui">حفظ</b>.</li>
+          </ol>
+          <p class="tip"><strong>دفعت من حسابين؟</strong> فعّل خيار <b class="ui">الدفع من أكثر من حساب</b> وقسّم المبلغ، مثلاً جزء نقداً وجزء بالبطاقة. وتحت <b class="ui">خيارات إضافية</b> تستطيع إرفاق صورة الفاتورة وكتابة ملاحظة.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/expense.webp" alt="نموذج إضافة مصروف" width="540" height="1200" loading="lazy"></button><figcaption>إضافة مصروف</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تسجيل دخل</h3>
+          <ol class="do">
+            <li>اضغط <b class="ui">+</b> ثم <b class="ui">دخل</b>.</li>
+            <li>اكتب المبلغ، واختر <b class="ui">مصدر الدخل</b> (الراتب، عمل حر…).</li>
+            <li>اختر <b class="ui">الحساب المستلم</b> الذي دخل فيه المال.</li>
+            <li>اختر <b class="ui">طريقة الاستلام</b> ثم اضغط <b class="ui">حفظ</b>.</li>
+          </ol>
+          <p class="note">استلمت المبلغ في أكثر من حساب؟ فعّل <b class="ui">الاستلام في أكثر من حساب</b>.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/income.webp" alt="نموذج إضافة دخل" width="540" height="1200" loading="lazy"></button><figcaption>إضافة دخل</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>التحويل بين حساباتك</h3>
+          <p>عندما تسحب من البنك نقداً أو تنقل مالاً بين حساباتك، سجّلها <b class="ui">تحويلاً</b> لا مصروفاً، لأن مالك لم يخرج منك.</p>
+          <ol class="do">
+            <li>اضغط <b class="ui">+</b> ثم <b class="ui">تحويل بين الحسابات</b>.</li>
+            <li>اختر <b class="ui">من حساب</b> و<b class="ui">إلى حساب</b>.</li>
+            <li>اكتب <b class="ui">المبلغ المحوّل</b> ثم اضغط <b class="ui">تنفيذ التحويل</b>.</li>
+          </ol>
+          <p class="tip"><strong>مهم:</strong> التحويل لا يُحتسب دخلاً ولا مصروفاً، ولا يغيّر إجمالي أموالك. يتغير فقط رصيد الحسابين.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/transfer.webp" alt="شاشة التحويل بين الحسابات" width="540" height="1200" loading="lazy"></button><figcaption>تحويل بين الحسابات</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="accounts">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٤</span>
+        <h2>الحسابات والمحافظ</h2>
+        <p>الحساب هو أي مكان تحفظ فيه مالك: محفظة نقدية، حساب بنكي، محفظة إلكترونية، أو ادخار. تصل إليها من <b class="ui">المزيد ← الحسابات والمحافظ</b> أو من زر <b class="ui">عرض الحسابات والأرصدة</b> في الرئيسية.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>قائمة الحسابات</h3>
+          <ul class="dl">
+            <li>في الأعلى <b class="ui">إجمالي الأرصدة</b> وزر <b class="ui">تحويل بين الحسابات</b>.</li>
+            <li>لكل حساب اسمه ونوعه وعملته ورصيده الحالي. اضغط أي حساب لترى سجله.</li>
+            <li>زر <b class="ui">+</b> في أعلى الشاشة يضيف حساباً جديداً.</li>
+          </ul>
+          <p class="note">الحسابات بعملة أخرى (مثل الريال اليمني) تظهر بعملتها.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/accounts.webp" alt="قائمة الحسابات والمحافظ مع أرصدتها" width="540" height="1200" loading="lazy"></button><figcaption>الحسابات والمحافظ</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>إضافة حساب</h3>
+          <ol class="do">
+            <li>اكتب <b class="ui">اسم الحساب</b> (مثلاً: الأهلي، الراجحي، المحفظة).</li>
+            <li>اختر <b class="ui">نوع الحساب</b>: محفظة نقدية، حساب بنكي، محفظة إلكترونية، ادخار، أو أخرى.</li>
+            <li>اختر <b class="ui">العملة</b>.</li>
+            <li>اكتب <b class="ui">رصيد البداية</b>: المبلغ الموجود فيه الآن.</li>
+            <li>اختر <b class="ui">تاريخ رصيد البداية</b>، أو <b class="ui">بلا تاريخ</b>. التقارير قبل هذا التاريخ لا تحسب الرصيد.</li>
+            <li>اختر لوناً يميّزه، ثم اضغط <b class="ui">حفظ</b>.</li>
+          </ol>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/account-new.webp" alt="نموذج إضافة حساب جديد" width="540" height="1200" loading="lazy"></button><figcaption>حساب جديد</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>سجل الحساب</h3>
+          <p>عند الضغط على حساب يظهر <b class="ui">الرصيد الحالي</b>، وما <b class="ui">دخل إلى الحساب</b> وما <b class="ui">خرج منه</b> هذا الشهر، ثم كل حركاته من الأحدث للأقدم.</p>
+          <ul class="dl">
+            <li>صفِّ الحركات بـ<b class="ui">الكل</b> أو <b class="ui">الداخل</b> أو <b class="ui">الخارج</b>.</li>
+            <li>تحت كل حركة يظهر <b class="ui">الرصيد</b> بعدها مباشرة.</li>
+            <li>اضغط أي حركة لتعديلها أو حذفها، والقلم في الأعلى يعدّل الحساب نفسه.</li>
+          </ul>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/account-history.webp" alt="سجل حساب المحفظة النقدية" width="540" height="1200" loading="lazy"></button><figcaption>سجل الحساب</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>مطابقة الرصيد مع الواقع</h3>
+          <p>إن اختلف رصيد الحساب في جيبي عمّا في البنك أو في محفظتك (لأنك نسيت تسجيل شيء):</p>
+          <ol class="do">
+            <li>افتح سجل الحساب واضغط <b class="ui">مطابقة مع الرصيد الفعلي</b>.</li>
+            <li>اكتب <b class="ui">الرصيد الفعلي الآن</b> كما يظهر في تطبيق البنك أو في محفظتك.</li>
+            <li>يعرض لك جيبي الفرق، وما سيسجّله: مصروف أو دخل باسم «تسوية رصيد».</li>
+            <li>اضغط <b class="ui">تسجيل التسوية</b>. إن كان الرصيد مطابقاً يظهر <b class="ui">✓ الرصيد مطابق</b>، فاضغط <b class="ui">تم</b>.</li>
+          </ol>
+          <p class="note">التسوية عملية عادية، يمكنك لاحقاً تغيير تصنيفها أو حذفها.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/reconcile.webp" alt="نافذة مطابقة الرصيد" width="540" height="1200" loading="lazy"></button><figcaption>مطابقة الرصيد</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="debts">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٥</span>
+        <h2>الديون: ما لك وما عليك</h2>
+        <p>جيبي يرتّب الديون حسب الأشخاص. لكل شخص صفحة فيها كل ديونه ودفعاته.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تبويب الديون</h3>
+          <ul class="dl">
+            <li>في الأعلى: <b class="ui">لي عند الآخرين</b>، <b class="ui">للآخرين عندي</b>، و<b class="ui">الصافي</b> بينهما.</li>
+            <li>صفِّ القائمة: <b class="ui">الكل</b>، <b class="ui">لي عندهم</b>، <b class="ui">لهم عندي</b>، <b class="ui">متأخرة</b>، <b class="ui">مسدّدة</b>.</li>
+            <li>تحت <b class="ui">الأشخاص</b> يظهر كل شخص مع ما له وما عليه وعدد ديونه القائمة. اضغط الاسم لفتح صفحته.</li>
+            <li>زر <b class="ui">إضافة دين</b> في الأسفل يسجّل ديناً جديداً.</li>
+          </ul>
+          <p class="note">العدسة 🔍 في الأعلى للبحث عن شخص، والعين لإخفاء المبالغ.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/debts.webp" alt="تبويب الديون مع ملخص وقائمة الأشخاص" width="540" height="1200" loading="lazy"></button><figcaption>تبويب الديون</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تسجيل دين جديد</h3>
+          <ol class="do">
+            <li>اختر نوع الدين: <b class="ui">لي عند شخص</b> (أعطيته مالاً وسيردّه لك) أو <b class="ui">عليّ لشخص</b> (أخذت منه مالاً وستردّه له).</li>
+            <li>اكتب <b class="ui">اسم الشخص أو الجهة</b>. إن كان مسجلاً من قبل يُضاف الدين إلى صفحته.</li>
+            <li>اكتب <b class="ui">المبلغ الأصلي</b>، واختر <b class="ui">عملة الدين</b>.</li>
+            <li>اكتب وصفاً أو سبباً إن أردت (مثلاً: سلفة).</li>
+            <li>افتح <b class="ui">خيارات إضافية</b> لتحديد التاريخ، وموعد الاستحقاق، والحساب الذي خرج منه المال أو دخل إليه.</li>
+            <li>اضغط <b class="ui">حفظ الدين</b>.</li>
+          </ol>
+          <p class="tip"><strong>نصيحة:</strong> حدّد <b class="ui">تاريخ الاستحقاق</b> حتى يذكّرك جيبي قبل الموعد بإشعار، ويظهر الدين في التقويم.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/debt-new.webp" alt="نموذج تسجيل دين جديد" width="540" height="1200" loading="lazy"></button><figcaption>دين جديد</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>صفحة الشخص</h3>
+          <ul class="dl">
+            <li><b class="ui">الرصيد الصافي</b> بينكما، و<b class="ui">تفاصيل المبالغ</b> تفتح مجموع ما أقرضته وما استلمته.</li>
+            <li>زر <b class="ui">أقرضته</b> (أخضر) يضيف ديناً جديداً لك عنده، و<b class="ui">اقترضت منه</b> (أحمر) ديناً عليك له.</li>
+            <li><b class="ui">تسجيل دفعة</b>: عندما يردّ لك أو تردّ له جزءاً من المال.</li>
+            <li>تبويبا <b class="ui">الديون</b> و<b class="ui">الدفعات</b>: كل دين مع إجماليه والمدفوع منه والمتبقي.</li>
+            <li>قائمة ⋮ في الأعلى فيها: <b class="ui">كشف حساب</b> (PDF ترسله له)، <b class="ui">تذكير ودي</b>، <b class="ui">مقاصة</b>، و<b class="ui">حذف الشخص</b>.</li>
+          </ul>
+          <p class="note">المقاصة تظهر عندما يكون لك عنده وله عندك بنفس العملة، فتُسقط المبلغ المتقابل من الطرفين.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/person.webp" alt="صفحة الشخص مع الرصيد الصافي وتبويبي الديون والدفعات" width="540" height="1200" loading="lazy"></button><figcaption>صفحة الشخص</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="payments">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٦</span>
+        <h2>الدفعات والسندات</h2>
+        <p>الدفعة هي جزء من دين يُسدَّد أو يُحصَّل. لا تُحسب دخلاً ولا مصروفاً، لأنها مال كان لك أو عليك أصلاً.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تسجيل دفعة لشخص</h3>
+          <ol class="do">
+            <li>افتح صفحة الشخص واضغط <b class="ui">تسجيل دفعة</b>، أو من زر <b class="ui">+</b> اختر <b class="ui">دفعة دين</b> ثم الشخص.</li>
+            <li>اختر <b class="ui">استلمتُ منه</b> إن ردّ لك مالاً، أو <b class="ui">دفعتُ له</b> إن رددت له. تحتها يظهر المتبقي بينكما وعدد الديون.</li>
+            <li>اكتب <b class="ui">المبلغ</b>، أو اضغط <b class="ui">المبلغ كاملاً</b> إن سدّد كل ما عليه.</li>
+            <li>اختر الحساب في <b class="ui">استلمتُ في حساب</b> (أو دفعتُ من حساب)، وغيّر <b class="ui">تاريخ الدفعة</b> إن كانت قديمة.</li>
+            <li>تحت <b class="ui">كيف ستُوزَّع الدفعة</b> يعرض جيبي نصيب كل دين من المبلغ، والمتأخر أولاً.</li>
+            <li>أرفق صورة الإيصال أو الكمبيالة من <b class="ui">إرفاق صورة</b>، واكتب ملاحظة إن أردت.</li>
+            <li>اضغط <b class="ui">حفظ الدفعة</b>. تظهر رسالة في الأسفل فيها زر <b class="ui">السند</b> لفتح سند الدفعة.</li>
+          </ol>
+          <p class="tip"><strong>عملة مختلفة؟</strong> إن كان الدين بعملة والحساب بأخرى، يسألك جيبي: «كم استلمت فعلاً بعملة الحساب؟» ويقترح المبلغ حسب سعر الصرف، وتستطيع تعديله.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/person-pay.webp" alt="نافذة تسجيل دفعة مع شخص وتوزيعها على الديون" width="540" height="1200" loading="lazy"></button><figcaption>تسجيل دفعة</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>سند القبض أو الصرف</h3>
+          <p>لكل دفعة سند جاهز: <b class="ui">سند قبض</b> عندما تستلم، و<b class="ui">سند صرف</b> عندما تدفع. فيه:</p>
+          <ul class="dl">
+            <li>رقم السند وتاريخه، والمبلغ بالأرقام وبالحروف (مثلاً: فقط خمسمئة ريال سعودي لا غير).</li>
+            <li>الحساب وطريقة الدفع، والدين المسدَّد منه والمتبقي بعد الدفعة.</li>
+          </ul>
+          <ol class="do">
+            <li><b class="ui">طباعة السند</b>: يفتح شاشة الطباعة في الجوال.</li>
+            <li><b class="ui">إرسال عبر واتساب</b>: يرسل ملف PDF للشخص مباشرة.</li>
+            <li><b class="ui">مشاركة PDF</b>: لأي تطبيق آخر.</li>
+          </ol>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/receipt.webp" alt="شاشة سند القبض مع أزرار الطباعة والإرسال" width="540" height="1200" loading="lazy"></button><figcaption>سند قبض</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>عرض الدفعات وتعديلها</h3>
+          <p>كل الدفعات في تبويب <b class="ui">العمليات ← الدفعات</b>، مع ما <b class="ui">استلمته من المدينين</b> وما <b class="ui">سددته للدائنين</b> في الفترة. وتجدها أيضاً في تبويب <b class="ui">الدفعات</b> بصفحة الشخص.</p>
+          <ol class="do">
+            <li>اضغط الدفعة تفتح شاشة <b class="ui">تعديل الدفعة</b>: المبلغ الأصلي، المسدَّد حتى الآن، والمتبقي.</li>
+            <li>عدّل المبلغ أو الحساب أو التاريخ، ثم اضغط <b class="ui">حفظ الدفعة</b>.</li>
+            <li>أيقونة السند في الأعلى تعيد إصدار السند، وسلة المهملات تحذف الدفعة.</li>
+          </ol>
+          <p class="note">المحذوف يذهب إلى <b class="ui">سلة المحذوفات</b> 30 يوماً، وتظهر رسالة فيها زر <b class="ui">تراجع</b> للاستعادة فوراً.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/payment-edit.webp" alt="شاشة تعديل الدفعة" width="540" height="1200" loading="lazy"></button><figcaption>تعديل الدفعة</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>قائمة دفعات الديون</h3>
+          <p>اختر الفترة: <b class="ui">يوم</b>، <b class="ui">أسبوع</b>، <b class="ui">شهر</b> أو <b class="ui">سنة</b>، وتنقّل بالسهمين بين الفترات. زر <b class="ui">تسجيل دفعة</b> في الأسفل يسجل دفعة جديدة.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/payments-list.webp" alt="قائمة دفعات الديون في تبويب العمليات" width="540" height="1200" loading="lazy"></button><figcaption>دفعات الديون</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="ops">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٧</span>
+        <h2>العمليات</h2>
+        <p>سجلّ كل مصروفاتك ودخلك ودفعاتك، مرتّب حسب الأيام.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>تبويب العمليات</h3>
+          <ol class="do">
+            <li>اختر <b class="ui">المصروفات</b> أو <b class="ui">الدخل</b> أو <b class="ui">الدفعات</b>.</li>
+            <li>اختر الفترة: يوم، أسبوع، شهر، سنة، وتنقّل بالسهمين.</li>
+            <li>يظهر الإجمالي وعدد العمليات، و<b class="ui">أكثر التصنيفات استهلاكاً</b> مع نسبتها.</li>
+            <li>اضغط تصنيفاً من الأزرار (الطعام والمشروبات، السكن…) لعرض عملياته فقط.</li>
+            <li>اضغط أي عملية لتعديلها أو حذفها.</li>
+          </ol>
+          <p class="note">للبحث في كل العمليات بلا فترة، استخدم العدسة 🔍 في الأعلى، أو <b class="ui">المزيد ← سجل العمليات</b>.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/transactions.webp" alt="تبويب العمليات على المصروفات لشهر نوفمبر" width="540" height="1200" loading="lazy"></button><figcaption>المصروفات</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="reports">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٨</span>
+        <h2>التقارير</h2>
+        <p>صورة كاملة عن فترة تختارها، تشاركها أو تطبعها أو تصدّرها.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>قراءة التقرير</h3>
+          <ul class="dl">
+            <li><b class="ui">الفترة</b> في الأعلى: اضغطها لاختيار شهر أو فترة مخصصة، أو للتصفية بحساب أو تصنيف أو شخص.</li>
+            <li><b class="ui">خلاصة الفترة</b>: الفرق بين دخلك ومصروفاتك. علامة <b class="ui">وفّرت</b> تعني أن دخلك أكبر.</li>
+            <li><b class="ui">رصيدك في بداية الفترة</b> و<b class="ui">في نهايتها</b>.</li>
+            <li>عدد العمليات، ومتوسط الصرف اليومي، ثم التفاصيل حسب التصنيف والديون والميزانية.</li>
+          </ul>
+          <ol class="do">
+            <li><b class="ui">مشاركة</b>: يرسل التقرير PDF.</li>
+            <li><b class="ui">تصدير</b>: يحفظه ملف PDF أو Excel.</li>
+            <li><b class="ui">طباعة</b>: يفتح شاشة الطباعة.</li>
+          </ol>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/reports.webp" alt="تبويب التقارير لشهر نوفمبر مع خلاصة الفترة" width="540" height="1200" loading="lazy"></button><figcaption>التقارير</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="budget">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ٩</span>
+        <h2>الميزانية والتقويم</h2>
+        <p>من <b class="ui">المزيد ← التخطيط والمتابعة</b>.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>الميزانية الشهرية</h3>
+          <ol class="do">
+            <li>في <b class="ui">الميزانية الإجمالية</b> اضغط <b class="ui">تعديل</b> واكتب الحد الأقصى لصرفك هذا الشهر.</li>
+            <li>تحت <b class="ui">ميزانيات التصنيفات</b> اضغط <b class="ui">+ إضافة</b> لتحدد حداً لكل تصنيف، مثلاً 100 ريال للاتصالات.</li>
+            <li>يعرض جيبي لكل ميزانية ما صرفته منها والمتبقي ونسبته، ورسماً لتوزيع مصروفات الشهر.</li>
+          </ol>
+          <p class="note">يصلك إشعار عند صرف 80% من الميزانية وعند تجاوزها، ويمكن إيقافه من الإعدادات.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/budget.webp" alt="شاشة الميزانية الشهرية" width="540" height="1200" loading="lazy"></button><figcaption>الميزانية الشهرية</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>التقويم المالي</h3>
+          <p>تقويم الشهر مع نقاط ملونة تحت الأيام:</p>
+          <ul class="dl">
+            <li>أخضر: دخل أو تحصيل.</li>
+            <li>أحمر: مصروف أو سداد.</li>
+            <li>برتقالي: موعد استحقاق دين.</li>
+          </ul>
+          <p>اضغط أي يوم لترى عملياته تحت التقويم.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/calendar.webp" alt="التقويم المالي لشهر نوفمبر" width="540" height="1200" loading="lazy"></button><figcaption>التقويم المالي</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="settings">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ١٠</span>
+        <h2>المزيد والإعدادات</h2>
+        <p>زر القائمة ☰ في أعلى الرئيسية يفتح <b class="ui">المزيد</b>.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>قائمة المزيد</h3>
+          <ul class="dl">
+            <li><b class="ui">أموالك</b>: الحسابات والمحافظ، التحويل بين الحسابات، سجل العمليات.</li>
+            <li><b class="ui">التخطيط والمتابعة</b>: الميزانية الشهرية، التقويم المالي.</li>
+            <li><b class="ui">حماية البيانات</b>: النسخ الاحتياطي والاستعادة، سلة المحذوفات.</li>
+            <li><b class="ui">الإعداد</b>: التصنيفات، العملات وأسعار الصرف، الإعدادات.</li>
+          </ul>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/more.webp" alt="قائمة المزيد بمجموعاتها الأربع" width="540" height="1200" loading="lazy"></button><figcaption>المزيد</figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>الإعدادات المهمة</h3>
+          <ul class="dl">
+            <li><b class="ui">الوضع</b>: حسب النظام، نهاري، أو ليلي.</li>
+            <li><b class="ui">تنسيق التاريخ</b>، ومنها التاريخ الهجري.</li>
+            <li><b class="ui">تفعيل التنبيهات</b>، و<b class="ui">التذكير الافتراضي قبل الاستحقاق</b> (بيوم، بيومين، بأسبوع).</li>
+            <li><b class="ui">وقت التذكير اليومي</b>: الساعة التي تصلك فيها تذكيرات الديون والأقساط.</li>
+            <li><b class="ui">قفل التطبيق برمز سري</b>، ثم الدخول بالبصمة إن أردت.</li>
+          </ul>
+          <p class="tip"><strong>احفظ رمزك السري جيداً.</strong> بعد عدة محاولات خاطئة يُقفل الإدخال مدة تزيد مع كل خطأ، حماية لبياناتك.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/settings.webp" alt="شاشة الإعدادات مع التنبيهات ووقت التذكير" width="540" height="1200" loading="lazy"></button><figcaption>الإعدادات</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="backup">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ١١</span>
+        <h2>النسخ الاحتياطي: لا تخسر بياناتك</h2>
+        <p>بياناتك على جوالك فقط. إن ضاع الجوال أو حذفت التطبيق دون نسخة، تضيع البيانات. خذ نسخة بانتظام.</p>
+      </div>
+      <div class="step">
+        <div class="txt">
+          <h3>حفظ نسخة</h3>
+          <ol class="do">
+            <li>افتح <b class="ui">المزيد ← النسخ الاحتياطي والاستعادة</b>.</li>
+            <li>إن أردت، فعّل <b class="ui">تشفير النسخة بكلمة مرور</b> واكتبها. لا يُفتح الملف بدونها، فاحفظها جيداً.</li>
+            <li>اضغط <b class="ui">حفظ النسخة الاحتياطية</b> واختر مكان الملف: ذاكرة الجوال أو Google Drive.</li>
+          </ol>
+          <p class="note">النسخة ملف مضغوط واحد فيه كل بياناتك وصور الإيصالات.</p>
+          <h3>استعادة نسخة</h3>
+          <ol class="do">
+            <li>على الجوال الجديد ثبّت جيبي وافتح الشاشة نفسها.</li>
+            <li>اضغط <b class="ui">اختيار ملف للاستعادة</b> واختر ملف النسخة.</li>
+            <li>يتحقق جيبي من سلامة الملف، ويعرض محتوياته قبل أي تغيير لتؤكد. وقبل الاستعادة يحفظ نسخة داخلية من بياناتك الحالية.</li>
+          </ol>
+          <h3>النسخ التلقائي</h3>
+          <ol class="do">
+            <li>تحت <b class="ui">النسخ الاحتياطي التلقائي</b> اختر <b class="ui">متى يُحدَّث الملف؟</b>: <b class="ui">مرة يومياً</b> أو <b class="ui">بعد كل تعديل</b>.</li>
+            <li>يُستحسن تفعيل <b class="ui">تشفير النسخة بكلمة مرور</b> عند الحفظ في السحابة.</li>
+            <li>اضغط <b class="ui">اختيار مكان الملف وتفعيل</b>، ثم في النافذة التالية اختر <b class="ui">Drive</b> من القائمة الجانبية، ثم المجلد المناسب، واضغط <b class="ui">حفظ</b>.</li>
+          </ol>
+          <p class="tip"><strong>الأسهل:</strong> مع النسخ التلقائي إلى Google Drive يحدّث جيبي ملفاً واحداً دون أن تتذكر، ويرفعه تطبيق Drive إلى حسابك، فتبقى بياناتك آمنة حتى لو ضاع الجوال.</p>
+        </div>
+        <figure class="phone"><button type="button" aria-label="تكبير الصورة"><img src="img/backup.webp" alt="شاشة النسخ الاحتياطي والاستعادة" width="540" height="1200" loading="lazy"></button><figcaption>النسخ الاحتياطي والاستعادة</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ch" id="faq">
+      <div class="ch-head">
+        <span class="ch-num">الفصل ١٢</span>
+        <h2>أسئلة شائعة</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>لماذا لا تظهر دفعة الدين في الدخل أو المصروفات؟</summary>
+          <p>لأن المال كان لك أصلاً (أقرضته) أو عليك أصلاً (اقترضته). الدفعة تغيّر رصيد الحساب والمتبقي من الدين فقط، ولا تجعلك أغنى أو أفقر. تجدها في <b class="ui">العمليات ← الدفعات</b>.</p>
+        </details>
+        <details>
+          <summary>سحبت من الصراف، هل أسجلها مصروفاً؟</summary>
+          <p>لا، سجّلها <b class="ui">تحويلاً</b> من حساب البنك إلى المحفظة النقدية. المصروف يُسجَّل عندما تشتري شيئاً بالنقد.</p>
+        </details>
+        <details>
+          <summary>حذفت عملية بالخطأ، كيف أستعيدها؟</summary>
+          <p>اضغط <b class="ui">تراجع</b> في الرسالة التي تظهر بعد الحذف مباشرة، أو افتح <b class="ui">المزيد ← سلة المحذوفات</b> خلال 30 يوماً واستعدها.</p>
+        </details>
+        <details>
+          <summary>رصيد الحساب في جيبي لا يطابق البنك.</summary>
+          <p>غالباً نسيت تسجيل عملية. ابحث عنها أولاً، وإن لم تجدها استخدم <a href="#accounts">مطابقة الرصيد</a> في سجل الحساب.</p>
+        </details>
+        <details>
+          <summary>هل يرسل جيبي بياناتي إلى أي مكان؟</summary>
+          <p>لا. التطبيق يعمل بلا إنترنت ولا يحتاج حساباً. النسخ الاحتياطي يُحفظ في المكان الذي تختاره أنت.</p>
+        </details>
+        <details>
+          <summary>كيف أخفي المبالغ إن كان أحد بجانبي؟</summary>
+          <p>اضغط أيقونة العين 👁 في بطاقة الرصيد بالرئيسية أو في أعلى تبويب الديون، فتظهر المبالغ نجوماً.</p>
+        </details>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">دليل جيبي – JAYBI للمبتدئين • الصور من الإصدار 1.0.8 ببيانات تجريبية.</div>
+</footer>
+
+<dialog class="zoom" id="zoom" aria-label="صورة مكبرة">
+  <img id="zoom-img" alt="">
+  <form method="dialog"><button type="submit" id="zoom-close">إغلاق</button></form>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('zoom');
+  var big = document.getElementById('zoom-img');
+  document.querySelectorAll('figure.phone button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var img = b.querySelector('img');
+      big.src = img.src; big.alt = img.alt;
+      if (dlg.showModal) dlg.showModal();
+    });
+  });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>
